@@ -15,8 +15,8 @@ router.get('/', async function (req, res, next) {
 
 router.post('/', async function (req, res, next) {
   try {
-    const user  = await models.User.create(req.body)
-    res.json(new Response(user))
+    const users  = await models.User.create(req.body)
+    res.json(new Response(users))
   } catch (error) {
     res.status(500).json(new Response(error, false))
 
@@ -25,12 +25,12 @@ router.post('/', async function (req, res, next) {
 
 router.put('/:id', async function (req, res, next) {
   try {
-    const user  = await models.User.update(req.body, {
+    const users  = await models.User.update(req.body, {
       where: {
         id: req.params.id
       }
     })
-    res.json(new Response(user))
+    res.json(new Response(users))
   } catch (error) {
     res.status(500).json(new Response(error, false))
   }
@@ -39,12 +39,12 @@ router.put('/:id', async function (req, res, next) {
 router.delete('/:id', async function (req, res, next) {
 
   try {
-    const user  = await models.User.destroy({
+    const users  = await models.User.destroy({
       where: {
         id: req.params.id
       }
     })
-    res.json(new Response(user))
+    res.json(new Response(users))
   } catch (error) {
     res.status(500).json(new Response(error, false))
   }
