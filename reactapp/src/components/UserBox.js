@@ -21,40 +21,42 @@ export default class UserBox extends Component {
         }
     }
 
-    // addUser = (name, phone) => {
-    //     this.setState(function (state, props) {
-    //         return {
-    //             users:
-    //                 [...state.users,
-    //                 {
-    //                     name,
-    //                     phone
-    //                 }
-    //                 ]
-    //         }
-    //     })
+    addUser = (name, phone) => {
+        this.setState(function (state, props) {
+            return {
+                users:
+                    [
+                    {
+                        name,
+                        phone
+                    },
+                    ...state.users,
+                    ]
+            }
+        })
 
-    //     fetch('http://localhost:3000/users', {
-    //         method: 'POST', // or 'PUT'
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({ name, phone }),
-    //     })
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             console.log('Success:', data);
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //         });
+        fetch('http://localhost:3000/users', {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, phone }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("ini data",data.data)
+                // this.setState({ users: [data.data] })
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
-    //     fetch('http://localhost:3000/users')
-    //         .then((response) => response.json())
-    //         .then((data) => {
-    //             this.setState({ users: data })
-    //         })
-    // }
+        // fetch('http://localhost:3000/users')
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         this.setState({ users: data })
+        //     })
+    }
 
     render() {
         return (
@@ -65,7 +67,7 @@ export default class UserBox extends Component {
                     </div>
                     <div>
                         <UserForm 
-                        // add={this.addUser} 
+                         add={this.addUser} 
                         />
                     </div>
                     <UserList data={this.state.users} />
