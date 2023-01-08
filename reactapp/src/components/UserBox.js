@@ -21,7 +21,7 @@ export default class UserBox extends Component {
         }
     }
 
-    addUser = (name, phone) => {
+    addUser = async (name, phone) => {
         this.setState(function (state, props) {
             return {
                 users:
@@ -35,21 +35,29 @@ export default class UserBox extends Component {
             }
         })
 
-        fetch('http://localhost:3000/users', {
-            method: 'POST', // or 'PUT'
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, phone }),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("ini data",data.data)
-                // this.setState({ users: [data.data] })
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+            try {
+                const {data} = await axios.post('http://localhost:3000/users',{name, phone})
+                this.setState({users: data.data})
+            } catch (error) {
+                console.log(error)
+            }
+        
+    
+        // fetch('http://localhost:3000/users', {
+        //     method: 'POST', // or 'PUT'
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ name, phone }),
+        // })
+        //     .then((response) => response.json())
+        //     .then((data) => {
+        //         // console.log("ini data",data.data)
+        //         // this.setState({ users: [data.data] })
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
 
         // fetch('http://localhost:3000/users')
         //     .then((response) => response.json())
@@ -70,8 +78,8 @@ export default class UserBox extends Component {
                          add={this.addUser} 
                         />
                     </div>
-                    <UserList data={this.state.users} />
-                    <div className="card-footer">
+                    <div className="card-footer ">
+                <UserList data={this.state.users} />
                     </div>
                 </div>
             </div>

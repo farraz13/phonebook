@@ -1,13 +1,14 @@
-export default function UserItem(props){
-    return(
+export default function UserItem(props) {
+    return (
         <tr>
-        <td>{props.no}</td>
-        <td>{props.name}</td>
-        <td>{props.phone}</td>
-        <td>{props.actions}</td>
-        <td ><button type="button" className="btn btn-dark ">edit</button></td>
+            <td>{props.no}</td>
+            <td>{props.name}</td>
+            <td>{props.phone}</td>
+            <td>{props.actions}
+                <button type="button" className="btn btn-dark mx-2">edit</button>
+                <button type="button" className="btn btn-danger">delete</button>
+            </td>
+        </tr>
 
-    </tr>
-    
     )
 }

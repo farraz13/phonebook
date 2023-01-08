@@ -35,7 +35,7 @@ export default class UserForm extends Component {
                     </div>
                 </div>
                 <div className="row mb-3">
-                    <label htmlFor="phone" className="col-sm-2 col-form-label">phone</label>
+                    <label htmlFor="phone" className="col-sm-2 col-form-label col-form-label-sm">phone</label>
                     <div className="col-sm-10">
                         <input type="text" className="form-control" id="phone" name="phone" placeholder="" onChange={this.handleInputChange} value={this.state.phone} />
                     </div>
