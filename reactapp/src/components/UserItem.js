@@ -1,3 +1,5 @@
+import React from "react"
+
 export default function UserItem(props) {
     return (
         <tr>
@@ -6,7 +8,7 @@ export default function UserItem(props) {
             <td>{props.phone}</td>
             <td>{props.actions}
                 <button type="button" className="btn btn-dark mx-2">edit</button>
-                <button type="button" className="btn btn-danger">delete</button>
+                <button type="button" className="btn btn-danger" onClick={props.remove}>delete</button>
             </td>
         </tr>
 

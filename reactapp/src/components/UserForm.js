@@ -20,8 +20,9 @@ export default class UserForm extends Component {
     }
 
     handleSubmit = (event) => {
+        console.log(event)
         event.preventDefault()
-       this.props.add(this.state.name, this.state.phone)
+       this.props.add({name: this.state.name, phone: this.state.phone})
         this.setState({ name: '', phone: '' })
     }
 
