@@ -13,22 +13,27 @@ export default class UserBox extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { 
-            users: [] 
+        this.state = {
+            users: []
         }
     }
 
     async componentDidMount() {
         try {
             const { data } = await request.get('users')
-            this.setState({ users: data.data })
+            this.setState({
+                users: data.data.map(item => {
+                    item.sent = true
+                    return item
+                })
+            })
         } catch (error) {
             console.log(error)
         }
     }
 
     addUser = ({ name, phone }) => {
-        console.log(name,phone,'ini userphone')
+        // console.log(name,phone,'ini userphone')
         const id = Date.now()
         this.setState(function (state) {
             return {
@@ -42,8 +47,8 @@ export default class UserBox extends Component {
                     }]
             }
         })
-       
-       
+
+
 
         axios.post('http://localhost:3000/users', {
             name,
@@ -83,18 +88,39 @@ export default class UserBox extends Component {
     removeUser = async (id) => {
         try {
             const { data } = await request.delete(`users/${id}`)
-            if(data.success){
-                this.setState((state) =>({
+            if (data.success) {
+                this.setState((state) => ({
                     users: state.users.filter(item => item.id != id)
                 }))
             } else {
-                alert ('delete failure')
+                alert('delete failure')
             }
         } catch (error) {
-            
+
         }
     }
-    
+
+    resendUser = async ({ id, name, phone }) => {
+        console.log(id, name, phone, 'resend')
+        try {
+            const { data } = await request.post(`users`, { name, phone })
+            if (data.success) {
+                this.setState((state) => ({
+                    users: state.users.map(item => {
+                        if (item.id == id) {
+                            return { ...data.data, sent: true }
+                        }
+                        return item
+                    })
+                }))
+            } else {
+                console.log(data.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
     render() {
         return (
             <div className="container">
@@ -108,7 +134,10 @@ export default class UserBox extends Component {
                         />
                     </div>
                     <div className="card-footer">
-                        <UserList data={this.state.users} remove = {this.removeUser} />
+                        <UserList data={this.state.users}
+                            remove={this.removeUser}
+                            resend={this.resendUser}
+                        />
                     </div>
                 </div>
             </div>

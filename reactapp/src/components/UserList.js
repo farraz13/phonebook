@@ -1,7 +1,7 @@
 import UserItem from "./UserItem"
 import React from "react"
 export default function UserList(props) {
-    console.log(props, 'ini props')
+    // console.log(props, 'ini props')
     return (
         <div className="card"  >
             <table className="table table-striped">
@@ -16,10 +16,12 @@ export default function UserList(props) {
                 <tbody>
 
                     {props.data.map((user, index) => (
-                        <UserItem key={user.id} no={index + 1}
-                            name={user.name}
-                            phone={user.phone}
+                        <UserItem
+                            key={user.id}
+                            no={index + 1}
+                            user= {user}
                             remove={() => props.remove(user.id)}
+                            resend={() => props.resend(user)}
                         />
                     ))}
                 </tbody>
