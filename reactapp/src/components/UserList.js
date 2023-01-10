@@ -19,9 +19,10 @@ export default function UserList(props) {
                         <UserItem
                             key={user.id}
                             no={index + 1}
-                            user= {user}
+                            user={user}
                             remove={() => props.remove(user.id)}
                             resend={() => props.resend(user)}
+                            update={(name, phone) => props.update(user.id, name, phone)}
                         />
                     ))}
                 </tbody>

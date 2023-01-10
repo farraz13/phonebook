@@ -28,9 +28,11 @@ router.put('/:id', async function (req, res, next) {
     const users  = await models.User.update(req.body, {
       where: {
         id: req.params.id
-      }
+      },
+      returning:true,
+      plain:true
     })
-    res.json(new Response(users))
+    res.json(new Response(users[1]))
   } catch (error) {
     res.status(500).json(new Response(error, false))
   }

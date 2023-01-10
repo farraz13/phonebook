@@ -121,6 +121,32 @@ export default class UserBox extends Component {
         }
 
     }
+
+updateUser =(id,name,phone)=>{
+    axios.put(`http://localhost:3000/users/${id}`, {
+            name,
+            phone
+        }).then((data) => {
+            this.setState(function (state) {
+                return {
+                    users:
+                        state.users.map(item => {
+                            if (item.id === id) {
+                                return {
+                                    id: data.data.data.id,
+                                    name: data.data.data.name,
+                                    phone: data.data.data.phone,
+                                    sent: true
+                                }
+                            }
+                            return item
+                        })
+                }
+            })
+        })
+     
+}
+
     render() {
         return (
             <div className="container">
@@ -137,6 +163,7 @@ export default class UserBox extends Component {
                         <UserList data={this.state.users}
                             remove={this.removeUser}
                             resend={this.resendUser}
+                            update={this.updateUser}
                         />
                     </div>
                 </div>
