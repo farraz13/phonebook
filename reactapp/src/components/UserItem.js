@@ -47,7 +47,7 @@ export default class UserItem extends Component {
                     <Fragment>
                         <td>
                             <input
-                            className=""
+                            className="col-auto"
                                 type="text"
                                 name="name"
                                 value={this.state.name}
@@ -56,7 +56,7 @@ export default class UserItem extends Component {
                                 </td>
                                 <td>
                             <input
-                            className="mx-2"
+                            className="col-auto"
                                 type="text"
                                 name="phone"
                                 value={this.state.phone}

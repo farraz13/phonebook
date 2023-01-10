@@ -122,8 +122,8 @@ export default class UserBox extends Component {
 
     }
 
-updateUser =(id,name,phone)=>{
-    axios.put(`http://localhost:3000/users/${id}`, {
+    updateUser = (id, name, phone) => {
+        axios.put(`http://localhost:3000/users/${id}`, {
             name,
             phone
         }).then((data) => {
@@ -144,8 +144,8 @@ updateUser =(id,name,phone)=>{
                 }
             })
         })
-     
-}
+
+    }
 
     render() {
         return (
@@ -154,17 +154,29 @@ updateUser =(id,name,phone)=>{
                     <div className="card-header">
                         <h1 className="text-center"> Phone Book Apps</h1>
                     </div>
-                    <div>
-                        <UserForm
-                            add={this.addUser}
-                        />
-                    </div>
-                    <div className="card-footer">
-                        <UserList data={this.state.users}
-                            remove={this.removeUser}
-                            resend={this.resendUser}
-                            update={this.updateUser}
-                        />
+                    <div className="card-body">
+                        <div>
+                            <div className="card">
+                                <div className="card-header">
+                                    <strong className=""> Searching</strong>
+                                </div>
+                                <UserForm search={this.searchUser} submitLabel="search" nameType="text" />
+                            </div>
+                            <hr />
+                            <div className="card card-header my-3">
+                                <strong className="card-header"> Add User</strong>
+                                <UserForm add={this.addUser} />
+                            </div>
+                        </div>
+
+                        <div className="card-footer">
+
+                            <UserList data={this.state.users}
+                                remove={this.removeUser}
+                                resend={this.resendUser}
+                                update={this.updateUser}
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
