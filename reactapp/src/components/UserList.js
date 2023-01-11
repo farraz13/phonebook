@@ -1,9 +1,17 @@
 import UserItem from "./UserItem"
 import React from "react"
 export default function UserList(props) {
-    // console.log(props, 'ini props')
+    
+    const scrolling = (event) => {
+        var element = event.target;
+        if (element.scrollHeight - element.scrollTop === element.clientHeight)
+        {
+            props.loadUser()
+        }
+    }
+
     return (
-        <div className="card"  >
+        <div onScroll={scrolling} style={{overflow: 'scroll', height: 200}}>
             <table className="table table-striped">
                 <thead>
                     <tr>

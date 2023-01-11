@@ -13,20 +13,28 @@ export default class UserBox extends Component {
 
     constructor(props) {
         super(props)
+        this.params = {}
         this.state = {
             users: []
         }
     }
 
-    async componentDidMount() {
+     componentDidMount() {
+        this.loadUser()
+    }
+
+    loadUser = async () => {
         try {
-            const { data } = await request.get('users')
+            const { data } = await request.get('users', { params: this.params })
             this.setState({
-                users: data.data.map(item => {
+                users:[ ...(this.params.page === 1 ? [] : this.state.users), ...data.data.result.map(item => {
                     item.sent = true
                     return item
-                })
+                })]
             })
+            this.params.page = data.data.page
+            this.params.totalPage = data.data.totalPage
+
         } catch (error) {
             console.log(error)
         }
@@ -147,6 +155,19 @@ export default class UserBox extends Component {
 
     }
 
+    loadMore = () => {
+        if (this.params.page <= this.params.totalPage) {
+            this.params = { ...this.params, page: this.params.page + 1 }
+        }
+        this.loadUser()
+    }
+
+    searchUser = (query = {}) => {
+        console.log(query)
+        this.params = { ...this.params, ...query, page: 1 }
+        this.loadUser()
+    }
+
     render() {
         return (
             <div className="container">
@@ -160,12 +181,12 @@ export default class UserBox extends Component {
                                 <div className="card-header">
                                     <strong className=""> Searching</strong>
                                 </div>
-                                <UserForm search={this.searchUser} submitLabel="search" nameType="text" />
+                                <UserForm submit={this.searchUser} submitLabel="search" nameType="text" />
                             </div>
                             <hr />
                             <div className="card card-header my-3">
                                 <strong className="card-header"> Add User</strong>
-                                <UserForm add={this.addUser} />
+                                <UserForm submit={this.addUser} />
                             </div>
                         </div>
 
@@ -175,6 +196,7 @@ export default class UserBox extends Component {
                                 remove={this.removeUser}
                                 resend={this.resendUser}
                                 update={this.updateUser}
+                                loadUser={this.loadMore}
                             />
                         </div>
                     </div>
